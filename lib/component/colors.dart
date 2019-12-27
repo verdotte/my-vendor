@@ -11,3 +11,11 @@ const mSellerErrorRed = const Color(0xFFC5032B);
 
 const mSellerSurfaceWhite = const Color(0xFFFFFBFA);
 const mSellerBackgroundWhite = Colors.white;
+
+const linkStyle = TextStyle(
+  color: mSeller400,
+  fontWeight: FontWeight.bold,
+  decoration: TextDecoration.underline,
+  fontFamily: 'Poppin',
+  fontSize: 17.0,
+);
