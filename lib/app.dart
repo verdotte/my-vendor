@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:vendor/component/colors.dart';
 import 'package:vendor/screen/splashScreen.dart';
+import 'package:vendor/screen/login.dart';
+import 'package:vendor/screen/register.dart';
+import 'package:vendor/screen/resetPassword.dart';
 
 class App extends StatefulWidget {
   @override
@@ -14,6 +17,9 @@ class _AppState extends State<App> {
       home: SplashScreen(),
       routes: {
         '/splash': (context) => SplashScreen(),
+        '/login': (context) => Login(),
+        '/register': (context) => Register(),
+        '/reset': (context) => ResetPassword()
       },
       theme: mSellerTheme,
     );
@@ -44,19 +50,22 @@ ThemeData _buildSellerTheme() {
 TextTheme _buildShrineTextTheme(TextTheme base) {
   return base.copyWith(
     headline: base.headline.copyWith(
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w900,
+      fontFamily: 'Poppin',
+      color: mSeller400,
+      fontSize: 25.0
     ),
     title: base.title.copyWith(
       fontSize: 20.0,
       fontWeight: FontWeight.bold,
+      fontFamily: 'Raleway',
+      color: mSeller900
     ),
     caption: base.caption.copyWith(
-      fontWeight: FontWeight.w400,
-      fontSize: 14.0,
+      fontWeight: FontWeight.w200,
+      fontSize: 17.0,
+      fontFamily: 'Poppin',
+      color: mSeller900,
     ),
-  ).apply(
-    fontFamily: 'Poppin',
-    displayColor: mSeller900,
-    bodyColor: mSeller900,
   );
 }
