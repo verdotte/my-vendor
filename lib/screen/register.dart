@@ -2,6 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/validator/validation.dart';
 import 'package:vendor/component/colors.dart';
+import 'package:provider/provider.dart';
+import 'package:vendor/service/authService.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -11,8 +13,11 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   GlobalKey<FormState> _registerKey = GlobalKey();
   bool _valid = false;
+  Map<String, String> user = {};
+
   @override
   Widget build(BuildContext context) {
+    var authService = Provider.of<AuthService>(context);
     return Scaffold(
       body: SafeArea(
         child: ListView(
@@ -25,7 +30,7 @@ class _RegisterState extends State<Register> {
                 children: <Widget>[
                   SizedBox(height: 80.0),
                   Text(
-                    'Sign Up to myVendor',
+                    '${authService.loading}',
                     style: Theme.of(context).textTheme.headline,
                   ),
                   SizedBox(height: 50.0),
@@ -34,7 +39,8 @@ class _RegisterState extends State<Register> {
                         labelText: "Username",
                         border: OutlineInputBorder(),
                       ),
-                      validator: Validation.usernameValidate),
+                      validator: Validation.usernameValidate,
+                      onSaved: (username) => user['username'] = username),
                   SizedBox(height: 20.0),
                   TextFormField(
                       decoration: InputDecoration(
@@ -42,7 +48,8 @@ class _RegisterState extends State<Register> {
                         border: OutlineInputBorder(),
                       ),
                       keyboardType: TextInputType.number,
-                      validator: Validation.phoneValidate),
+                      validator: Validation.phoneValidate,
+                      onSaved: (phone) => user['phone'] = phone),
                   SizedBox(height: 20.0),
                   TextFormField(
                       decoration: InputDecoration(
@@ -50,7 +57,8 @@ class _RegisterState extends State<Register> {
                         border: OutlineInputBorder(),
                       ),
                       keyboardType: TextInputType.emailAddress,
-                      validator: Validation.emailValidate),
+                      validator: Validation.emailValidate,
+                      onSaved: (email) => user['email'] = email),
                   SizedBox(height: 20.0),
                   TextFormField(
                       decoration: InputDecoration(
@@ -58,22 +66,30 @@ class _RegisterState extends State<Register> {
                         border: OutlineInputBorder(),
                       ),
                       obscureText: true,
-                      validator: Validation.passwordValidate),
+                      validator: Validation.passwordValidate,
+                      onSaved: (pass) => user['pass'] = pass),
                   SizedBox(height: 20.0),
-                  RaisedButton(
-                    onPressed: () {
-                      checkField();
-                    },
-                    child: Text(
-                      'Register',
-                      style: Theme.of(context).textTheme.title,
-                    ),
-                    shape: BeveledRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(7.0)),
-                    ),
-                    padding: EdgeInsets.only(
-                        left: 110.0, right: 110.0, top: 12.0, bottom: 12.0),
-                  ),
+                  authService.loading
+                      ? progressIndicator
+                      : RaisedButton(
+                          onPressed: () async {
+                            checkField();
+                            authService.userRegistration(user);
+                          },
+                          child: Text(
+                            'Register',
+                            style: Theme.of(context).textTheme.title,
+                          ),
+                          shape: BeveledRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(7.0)),
+                          ),
+                          padding: EdgeInsets.only(
+                              left: 110.0,
+                              right: 110.0,
+                              top: 12.0,
+                              bottom: 12.0),
+                        ),
                   SizedBox(height: 15.0),
                   RichText(
                       text: TextSpan(
@@ -98,11 +114,13 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  checkField() {
+  checkField() async {
     if (!_registerKey.currentState.validate()) {
       setState(() {
         _valid = true;
       });
+    } else {
+      _registerKey.currentState.save();
     }
   }
 }
