@@ -19,3 +19,8 @@ const linkStyle = TextStyle(
   fontFamily: 'Poppin',
   fontSize: 17.0,
 );
+
+const progressIndicator = CircularProgressIndicator(
+  backgroundColor: mSeller400,
+  strokeWidth: 3.0,
+);

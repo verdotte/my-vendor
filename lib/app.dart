@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:vendor/component/colors.dart';
 import 'package:vendor/screen/splashScreen.dart';
 import 'package:vendor/screen/login.dart';
 import 'package:vendor/screen/register.dart';
 import 'package:vendor/screen/resetPassword.dart';
+import 'package:vendor/service/authService.dart';
 
 class App extends StatefulWidget {
   @override
@@ -13,15 +15,22 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: SplashScreen(),
-      routes: {
-        '/splash': (context) => SplashScreen(),
-        '/login': (context) => Login(),
-        '/register': (context) => Register(),
-        '/reset': (context) => ResetPassword()
-      },
-      theme: mSellerTheme,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AuthService>(
+          create: (_) => AuthService(),
+        )
+      ],
+      child: MaterialApp(
+        home: SplashScreen(),
+        routes: {
+          '/splash': (context) => SplashScreen(),
+          '/login': (context) => Login(),
+          '/register': (context) => Register(),
+          '/reset': (context) => ResetPassword()
+        },
+        theme: mSellerTheme,
+      ),
     );
   }
 }
