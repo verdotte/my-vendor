@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:vendor/screen/home.dart';
 import 'package:vendor/validator/validation.dart';
 import 'package:vendor/component/colors.dart';
+import 'package:provider/provider.dart';
+import 'package:vendor/service/authService.dart';
+
 
 class Login extends StatefulWidget {
   @override
@@ -11,9 +15,12 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   GlobalKey<FormState> _loginKey = GlobalKey();
   bool _valid = false;
+  String txtEmail;
+  String txtPass;
 
   @override
   Widget build(BuildContext context) {
+    var authService = Provider.of<AuthService>(context);
     return Scaffold(
       body: SafeArea(
         child: ListView(
@@ -36,20 +43,25 @@ class _LoginState extends State<Login> {
                   ),
                   SizedBox(height: 80.0),
                   TextFormField(
-                      decoration: InputDecoration(
-                        labelText: "Email",
-                        border: OutlineInputBorder(),
-                      ),
-                      keyboardType: TextInputType.emailAddress,
-                      validator: Validation.emailValidate),
+                    decoration: InputDecoration(
+                      labelText: "Email",
+                      border: OutlineInputBorder(),
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: Validation.emailValidate,
+                    onSaved: (email) => txtEmail = email,
+                  ),
                   SizedBox(height: 20.0),
                   TextFormField(
-                      decoration: InputDecoration(
-                        labelText: "Password",
-                        border: OutlineInputBorder(),
-                      ),
-                      keyboardType: TextInputType.emailAddress,
-                      validator: Validation.passwordValidate),
+                    decoration: InputDecoration(
+                      labelText: "Password",
+                      border: OutlineInputBorder(),
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+                    obscureText: true,
+                    validator: Validation.passwordValidate,
+                    onSaved: (pass) => txtPass = pass,
+                  ),
                   SizedBox(height: 20.0),
                   Padding(
                     padding: const EdgeInsets.only(left: 90.0),
@@ -65,9 +77,15 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   SizedBox(height: 20.0),
+                  authService.loading
+                      ? progressIndicator :
                   RaisedButton(
-                    onPressed: () {
+                    onPressed: () async{
                       checkField();
+                      await authService.userLogin(txtEmail, txtPass)
+                      .then((e) => {
+                        e != null ? Navigator.pushReplacementNamed(context, '/home') : ''
+                      });
                     },
                     child: Text(
                       'Login',
@@ -85,7 +103,7 @@ class _LoginState extends State<Login> {
                       'Create an Account',
                       style: linkStyle,
                     ),
-                    onTap: (){
+                    onTap: () {
                       Navigator.pushReplacementNamed(context, '/register');
                     },
                   ),
@@ -103,6 +121,8 @@ class _LoginState extends State<Login> {
       setState(() {
         _valid = true;
       });
+    } else {
+      _loginKey.currentState.save();
     }
   }
 }

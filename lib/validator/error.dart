@@ -1,5 +1,6 @@
+import 'package:vendor/component/colors.dart';
 class Error {
-  static String authError (String err){
+  static void authError (String err){
     String errorMessage;
     switch (err) {
       case "ERROR_EMAIL_ALREADY_IN_USE":
@@ -29,7 +30,6 @@ class Error {
       default:
         errorMessage = "Internal problems.";
     }
-//    print('Error $errorMessage');
-    return errorMessage;
+    toastError(errorMessage);
   }
 }

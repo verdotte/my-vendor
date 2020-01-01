@@ -1,9 +1,9 @@
+import 'dart:core';
+import 'dart:core' as prefix0;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:vendor/validator/error.dart';
-
 
 class AuthService with ChangeNotifier {
 
@@ -11,17 +11,18 @@ class AuthService with ChangeNotifier {
   final Firestore _db = Firestore.instance;
 
   bool loading = false;
-  Observable<FirebaseUser> user;
-  Observable<Map<String, dynamic>> profile;
+  FirebaseUser _user;
+  Stream<Map<String, dynamic>> _profile;
+  FirebaseUser get user => _user;
+  Stream<Map<String, dynamic>> get profile => _profile;
 
   AuthService() {
-    user = Observable(_auth.onAuthStateChanged);
-    profile = user.switchMap((FirebaseUser u) {
+    _auth.onAuthStateChanged.listen((u){
       if(u != null){
-        return _db.collection('Users').document(u.uid).snapshots().map((snap) => snap.data);
-      } else {
-        return Observable.just({});
+        _user = u;
+        _profile = _db.collection('users').document(u.uid).snapshots().map((snap) => snap.data);
       }
+      notifyListeners();
     });
   }
 
@@ -41,9 +42,47 @@ class AuthService with ChangeNotifier {
       loading = false;
       notifyListeners();
     } catch (e) {
+      loading = false;
+      notifyListeners();
       Error.authError(e.code);
     }
     return user;
+  }
+
+  Future<FirebaseUser> userLogin(String email, String password) async{
+    FirebaseUser user;
+    try{
+      loading = true;
+      notifyListeners();
+      user = (await _auth.signInWithEmailAndPassword(email: email, password: password)).user;
+      loading = false;
+      notifyListeners();
+    } catch (e) {
+      loading = false;
+      notifyListeners();
+      Error.authError(e.code);
+    }
+    return user;
+  }
+
+  Future<bool> resetPassword(String email) async{
+    try {
+      loading = true;
+      notifyListeners();
+      await _auth.sendPasswordResetEmail(email: email);
+      loading = false;
+      notifyListeners();
+    } catch (e) {
+      loading = false;
+      notifyListeners();
+      Error.authError(e.code);
+    }
+    return true;
+  }
+
+  Future<void> logout() async{
+    _auth.signOut();
+    notifyListeners();
   }
 
 }

@@ -30,7 +30,7 @@ class _RegisterState extends State<Register> {
                 children: <Widget>[
                   SizedBox(height: 80.0),
                   Text(
-                    '${authService.loading}',
+                    'Sign up to myVendor',
                     style: Theme.of(context).textTheme.headline,
                   ),
                   SizedBox(height: 50.0),
@@ -74,7 +74,10 @@ class _RegisterState extends State<Register> {
                       : RaisedButton(
                           onPressed: () async {
                             checkField();
-                            authService.userRegistration(user);
+                            await authService.userRegistration(user)
+                            .then((e) => {
+                              e != null ? Navigator.pushReplacementNamed(context, '/home') : ''
+                            });
                           },
                           child: Text(
                             'Register',

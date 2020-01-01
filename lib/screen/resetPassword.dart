@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:vendor/component/colors.dart' as prefix0;
 import 'package:vendor/validator/validation.dart';
+import 'package:provider/provider.dart';
+import 'package:vendor/service/authService.dart';
 import 'package:vendor/component/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ResetPassword extends StatefulWidget {
   @override
@@ -8,12 +12,14 @@ class ResetPassword extends StatefulWidget {
 }
 
 class _ResetPasswordState extends State<ResetPassword> {
-
   GlobalKey<FormState> _resetKey = GlobalKey();
   bool _valid = false;
+  String txtEmail;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
+    var authService = Provider.of<AuthService>(context);
     return Scaffold(
       body: SafeArea(
         child: ListView(
@@ -36,28 +42,40 @@ class _ResetPasswordState extends State<ResetPassword> {
                   ),
                   SizedBox(height: 80.0),
                   TextFormField(
-                      decoration: InputDecoration(
-                        labelText: "Email",
-                        border: OutlineInputBorder(),
-                      ),
-                      keyboardType: TextInputType.emailAddress,
-                      validator: Validation.emailValidate
+                    decoration: InputDecoration(
+                      labelText: "Email",
+                      border: OutlineInputBorder(),
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: Validation.emailValidate,
+                    onSaved: (email) => txtEmail = email,
                   ),
                   SizedBox(height: 20.0),
-                  RaisedButton(
-                    onPressed: () {
-                      checkField();
-                    },
-                    child: Text(
-                      'Send',
-                      style: Theme.of(context).textTheme.title,
-                    ),
-                    shape: BeveledRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(7.0)),
-                    ),
-                    padding: EdgeInsets.only(
-                        left: 120.0, right: 120.0, top: 12.0, bottom: 12.0),
-                  ),
+                  authService.loading
+                      ? progressIndicator
+                      : RaisedButton(
+                          onPressed: () async{
+                            checkField();
+                            authService.resetPassword(txtEmail)
+                            .then((e) {
+                              toast("check the link we sent in your email");
+                              Navigator.pushReplacementNamed(context, '/login');
+                            });
+                          },
+                          child: Text(
+                            'Send',
+                            style: Theme.of(context).textTheme.title,
+                          ),
+                          shape: BeveledRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(7.0)),
+                          ),
+                          padding: EdgeInsets.only(
+                              left: 120.0,
+                              right: 120.0,
+                              top: 12.0,
+                              bottom: 12.0),
+                        ),
                 ],
               ),
             ),
@@ -72,6 +90,8 @@ class _ResetPasswordState extends State<ResetPassword> {
       setState(() {
         _valid = true;
       });
+    } else {
+      _resetKey.currentState.save();
     }
   }
 }

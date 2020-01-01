@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 const mSellerPink50 = const Color(0xFFFEEAE6);
 const mSeller100 = const Color(0xFFFEDBD0);
@@ -24,3 +25,25 @@ const progressIndicator = CircularProgressIndicator(
   backgroundColor: mSeller400,
   strokeWidth: 3.0,
 );
+
+toastError(String txt) => Fluttertoast.showToast(
+      msg: txt,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIos: 5,
+      backgroundColor: mSellerErrorRed,
+      textColor: Colors.white,
+      fontSize: 16.0,
+);
+
+toast(String txt) => Fluttertoast.showToast(
+  msg: txt,
+  toastLength: Toast.LENGTH_SHORT,
+  gravity: ToastGravity.TOP,
+  timeInSecForIos: 10,
+  backgroundColor: Colors.green,
+  textColor: Colors.white,
+  fontSize: 16.0,
+);
+
+
