@@ -5,6 +5,7 @@ import 'package:vendor/screen/splashScreen.dart';
 import 'package:vendor/screen/login.dart';
 import 'package:vendor/screen/register.dart';
 import 'package:vendor/screen/resetPassword.dart';
+import 'package:vendor/screen/home.dart';
 import 'package:vendor/service/authService.dart';
 
 class App extends StatefulWidget {
@@ -27,7 +28,8 @@ class _AppState extends State<App> {
           '/splash': (context) => SplashScreen(),
           '/login': (context) => Login(),
           '/register': (context) => Register(),
-          '/reset': (context) => ResetPassword()
+          '/reset': (context) => ResetPassword(),
+          '/home': (context) => Home()
         },
         theme: mSellerTheme,
       ),
