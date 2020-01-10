@@ -46,6 +46,7 @@ class _LoginState extends State<Login> {
                     decoration: InputDecoration(
                       labelText: "Email",
                       border: OutlineInputBorder(),
+                      labelStyle: Theme.of(context).textTheme.caption
                     ),
                     keyboardType: TextInputType.emailAddress,
                     validator: Validation.emailValidate,
@@ -56,6 +57,7 @@ class _LoginState extends State<Login> {
                     decoration: InputDecoration(
                       labelText: "Password",
                       border: OutlineInputBorder(),
+                      labelStyle: Theme.of(context).textTheme.caption
                     ),
                     keyboardType: TextInputType.emailAddress,
                     obscureText: true,
@@ -77,8 +79,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   SizedBox(height: 20.0),
-                  authService.loading
-                      ? progressIndicator :
+                  authService.loading ? progressIndicator :
                   RaisedButton(
                     onPressed: () async{
                       checkField();

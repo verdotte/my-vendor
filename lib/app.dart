@@ -7,6 +7,8 @@ import 'package:vendor/screen/register.dart';
 import 'package:vendor/screen/resetPassword.dart';
 import 'package:vendor/screen/home.dart';
 import 'package:vendor/service/authService.dart';
+import 'package:vendor/service/productService.dart';
+import 'package:vendor/screen/addProductPage.dart';
 
 class App extends StatefulWidget {
   @override
@@ -20,16 +22,20 @@ class _AppState extends State<App> {
       providers: [
         ChangeNotifierProvider<AuthService>(
           create: (_) => AuthService(),
+        ),
+        ChangeNotifierProvider<ProductService>(
+          create: (_) => ProductService(),
         )
       ],
       child: MaterialApp(
-        home: SplashScreen(),
+        home: Home(),
         routes: {
           '/splash': (context) => SplashScreen(),
           '/login': (context) => Login(),
           '/register': (context) => Register(),
           '/reset': (context) => ResetPassword(),
-          '/home': (context) => Home()
+          '/home': (context) => Home(),
+          '/add': (context) => AddProductPage()
         },
         theme: mSellerTheme,
       ),
@@ -42,7 +48,7 @@ final ThemeData mSellerTheme = _buildSellerTheme();
 ThemeData _buildSellerTheme() {
   final ThemeData base = ThemeData.light();
   return base.copyWith(
-    accentColor: mSeller900,
+    accentColor: color1,
     primaryColor: mSeller100,
     buttonTheme: base.buttonTheme.copyWith(
       buttonColor: mSeller100,
@@ -63,14 +69,14 @@ TextTheme _buildShrineTextTheme(TextTheme base) {
     headline: base.headline.copyWith(
       fontWeight: FontWeight.w900,
       fontFamily: 'Poppin',
-      color: mSeller400,
+      color: mSeller900,
       fontSize: 25.0
     ),
     title: base.title.copyWith(
       fontSize: 20.0,
       fontWeight: FontWeight.bold,
       fontFamily: 'Raleway',
-      color: mSeller900
+      color: mSellerBackgroundWhite
     ),
     caption: base.caption.copyWith(
       fontWeight: FontWeight.w200,

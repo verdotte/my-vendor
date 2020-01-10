@@ -38,6 +38,7 @@ class _RegisterState extends State<Register> {
                       decoration: InputDecoration(
                         labelText: "Username",
                         border: OutlineInputBorder(),
+                        labelStyle: Theme.of(context).textTheme.caption
                       ),
                       validator: Validation.usernameValidate,
                       onSaved: (username) => user['username'] = username),
@@ -45,6 +46,7 @@ class _RegisterState extends State<Register> {
                   TextFormField(
                       decoration: InputDecoration(
                         labelText: "Phone Number",
+                        labelStyle: Theme.of(context).textTheme.caption,
                         border: OutlineInputBorder(),
                       ),
                       keyboardType: TextInputType.number,
@@ -54,6 +56,7 @@ class _RegisterState extends State<Register> {
                   TextFormField(
                       decoration: InputDecoration(
                         labelText: "Email",
+                        labelStyle: Theme.of(context).textTheme.caption,
                         border: OutlineInputBorder(),
                       ),
                       keyboardType: TextInputType.emailAddress,
@@ -63,14 +66,14 @@ class _RegisterState extends State<Register> {
                   TextFormField(
                       decoration: InputDecoration(
                         labelText: "Password",
+                        labelStyle: Theme.of(context).textTheme.caption,
                         border: OutlineInputBorder(),
                       ),
                       obscureText: true,
                       validator: Validation.passwordValidate,
                       onSaved: (pass) => user['pass'] = pass),
                   SizedBox(height: 20.0),
-                  authService.loading
-                      ? progressIndicator
+                  authService.loading ? progressIndicator
                       : RaisedButton(
                           onPressed: () async {
                             checkField();

@@ -44,6 +44,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: "Email",
+                      labelStyle: Theme.of(context).textTheme.caption,
                       border: OutlineInputBorder(),
                     ),
                     keyboardType: TextInputType.emailAddress,
