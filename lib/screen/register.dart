@@ -33,7 +33,7 @@ class _RegisterState extends State<Register> {
                     'Sign up to myVendor',
                     style: Theme.of(context).textTheme.headline,
                   ),
-                  SizedBox(height: 50.0),
+                  SizedBox(height: 30.0),
                   TextFormField(
                       decoration: InputDecoration(
                         labelText: "Username",
@@ -73,44 +73,31 @@ class _RegisterState extends State<Register> {
                       validator: Validation.passwordValidate,
                       onSaved: (pass) => user['pass'] = pass),
                   SizedBox(height: 20.0),
-                  authService.loading ? progressIndicator
-                      : RaisedButton(
-                          onPressed: () async {
-                            checkField();
-                            await authService.userRegistration(user)
-                            .then((e) => {
-                              e != null ? Navigator.pushReplacementNamed(context, '/home') : ''
-                            });
-                          },
-                          child: Text(
-                            'Register',
-                            style: Theme.of(context).textTheme.title,
-                          ),
-                          shape: BeveledRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(7.0)),
-                          ),
-                          padding: EdgeInsets.only(
-                              left: 110.0,
-                              right: 110.0,
-                              top: 12.0,
-                              bottom: 12.0),
-                        ),
+                  authService.loading ? progressIndicator :
+                  RaisedButton(
+                    onPressed: () async{
+                      checkField();
+                      await authService.userRegistration(user)
+                          .then((e) => {
+                        e != null ? Navigator.pushReplacementNamed(context, '/home') : ''
+                      });
+                    },
+                    child: Text('Signup', style: Theme.of(context).textTheme.title),
+                  ),
                   SizedBox(height: 15.0),
                   RichText(
-                      text: TextSpan(
-                          style: Theme.of(context).textTheme.caption,
-                          children: [
+                    text: TextSpan(style: Theme.of(context).textTheme.caption,
+                      children: [
                         TextSpan(text: 'Already have an account? '),
                         TextSpan(
                             text: 'Login',
                             style: linkStyle,
                             recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.pushReplacementNamed(
-                                    context, '/login');
-                              })
-                      ]))
+                              ..onTap = () => Navigator.pushReplacementNamed(context, '/login')
+                        )
+                      ]
+                    ),
+                  )
                 ],
               ),
             ),
@@ -130,3 +117,4 @@ class _RegisterState extends State<Register> {
     }
   }
 }
+

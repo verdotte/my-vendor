@@ -39,7 +39,7 @@ class _LoginState extends State<Login> {
                   SizedBox(height: 10.0),
                   Text(
                     'Sign in to continue',
-                    style: Theme.of(context).textTheme.title,
+                    style: Theme.of(context).textTheme.caption,
                   ),
                   SizedBox(height: 80.0),
                   TextFormField(
@@ -68,14 +68,8 @@ class _LoginState extends State<Login> {
                   Padding(
                     padding: const EdgeInsets.only(left: 90.0),
                     child: InkWell(
-                      child: Text(
-                        'Password Forgot ?',
-                        style: Theme.of(context).textTheme.caption,
-                        textAlign: TextAlign.end,
-                      ),
-                      onTap: () {
-                        Navigator.pushNamed(context, '/reset');
-                      },
+                      child: Text('Password Forgot ?', style: Theme.of(context).textTheme.caption, textAlign: TextAlign.end),
+                      onTap: () => Navigator.pushNamed(context, '/reset')
                     ),
                   ),
                   SizedBox(height: 20.0),
@@ -88,25 +82,12 @@ class _LoginState extends State<Login> {
                         e != null ? Navigator.pushReplacementNamed(context, '/home') : ''
                       });
                     },
-                    child: Text(
-                      'Login',
-                      style: Theme.of(context).textTheme.title,
-                    ),
-                    shape: BeveledRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(7.0)),
-                    ),
-                    padding: EdgeInsets.only(
-                        left: 120.0, right: 120.0, top: 12.0, bottom: 12.0),
+                    child: Text('Signin', style: Theme.of(context).textTheme.title)
                   ),
                   SizedBox(height: 20.0),
                   InkWell(
-                    child: Text(
-                      'Create an Account',
-                      style: linkStyle,
-                    ),
-                    onTap: () {
-                      Navigator.pushReplacementNamed(context, '/register');
-                    },
+                    child: Text('Create an Account', style: linkStyle),
+                    onTap: () => Navigator.pushReplacementNamed(context, '/register')
                   ),
                 ],
               ),
@@ -127,3 +108,4 @@ class _LoginState extends State<Login> {
     }
   }
 }
+

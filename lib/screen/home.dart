@@ -25,18 +25,18 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    var authService = Provider.of<AuthService>(context);
-    bool login = authService.user != null;
-    if(!login) return Login();
+//    var authService = Provider.of<AuthService>(context);
+//    bool login = authService.user != null;
+//    if(!login) return Login();
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: mSeller300,
-        leading: Icon(Icons.menu, color: mSeller900),
+        backgroundColor: mVendor,
+        leading: Icon(Icons.menu, color: mSellerBackgroundWhite),
         title: Text('myVendor', style: Theme.of(context).textTheme.title),
         actions: <Widget>[
           PopupMenuButton<menuItem>(
-              icon: Icon(Icons.settings, color: mSeller900),
+              icon: Icon(Icons.settings, color: mSellerBackgroundWhite),
               offset: Offset(0, 100),
               elevation: 8.0,
               onSelected: (menuItem menu) {
@@ -81,13 +81,13 @@ class _HomeState extends State<Home> {
           ),
         ],
         currentIndex: _selectedPage,
-        backgroundColor: mSeller300,
-        selectedItemColor: mSellerBackgroundWhite,
+        backgroundColor: mSellerBackgroundWhite,
+        selectedItemColor: mVendor,
+        elevation: 10.0,
         onTap: onItemTap,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: mSeller900,
         onPressed: () {
           Navigator.pushReplacementNamed(context, '/add');
         },

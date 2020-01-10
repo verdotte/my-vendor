@@ -35,7 +35,7 @@ class _AddProductPageState extends State<AddProductPage> {
     product['uid'] = authService.user.uid;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: color1,
+        backgroundColor: mVendor,
         leading: IconButton(
           onPressed: () => Navigator.pushReplacementNamed(context, '/home'),
           icon: Icon(Icons.arrow_back, color:  mSellerBackgroundWhite),
@@ -44,7 +44,7 @@ class _AddProductPageState extends State<AddProductPage> {
       ),
       body: ListView(
         children: <Widget>[
-          SizedBox(height: 35.0),
+          SizedBox(height: 45.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -53,7 +53,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 height: 200.0,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: mSeller100,
+                    color: mSeller900,
                     width: 2,
                   ),
                 ),
@@ -70,7 +70,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 decoration: BoxDecoration(
                   color: mSellerBackgroundWhite,
                   border: Border.all(
-                    color: mSeller300,
+                    color: mSeller900,
                     width: 2,
                   ),
                   borderRadius: BorderRadius.circular(12),
@@ -91,7 +91,7 @@ class _AddProductPageState extends State<AddProductPage> {
                       onPressed: () => _pickImage(ImageSource.gallery),
                       icon: Icon(
                           Icons.photo_library,
-                          color:  color1,
+                          color:  mVendor,
                           size: 50.0
                       ),
                     ),
@@ -104,7 +104,7 @@ class _AddProductPageState extends State<AddProductPage> {
             key: _productKey,
             autovalidate: _valid,
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
               child: Column(
                 children: <Widget>[
                   SizedBox(height: 25.0),
@@ -136,15 +136,7 @@ class _AddProductPageState extends State<AddProductPage> {
                       await productService.addProduct(_imageFile, product)
                       .then((e) => Navigator.pushReplacementNamed(context, '/home'));
                     },
-                    child: Text(
-                      'Add',
-                      style: Theme.of(context).textTheme.title,
-                    ),
-                    shape: BeveledRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(7.0)),
-                    ),
-                    padding: EdgeInsets.only(
-                        left: 140.0, right: 140.0, top: 12.0, bottom: 12.0),
+                    child: Text('Add', style: Theme.of(context).textTheme.title)
                   ),
                 ],
               ),
@@ -164,3 +156,4 @@ class _AddProductPageState extends State<AddProductPage> {
     }
   }
 }
+

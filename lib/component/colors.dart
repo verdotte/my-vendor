@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-const mSeller50 = const Color(0xFFFEEAE6);
 const mSeller100 = const Color(0xFFFEDBD0);
 const mSeller300 = const Color(0xFFFBB8AC);
-const mSeller400 = const Color(0xFFEAA4A4);
 
 const mSeller900 = const Color(0xFF442B2D);
-
 const mSellerErrorRed = const Color(0xFFC5032B);
 
-const mSellerSurfaceWhite = const Color(0xFFFFFBFA);
+const mSellerSurfaceWhite = const Color(0xFFFCFBFA);
 const mSellerBackgroundWhite = Colors.white;
-
-Color color1 = _colorFromHex("#009EFA");
+Color mVendor = _colorFromHex("#009EFA");
 
 Color _colorFromHex(String hexColor) {
   final hexCode = hexColor.replaceAll('#', '');
@@ -21,7 +17,7 @@ Color _colorFromHex(String hexColor) {
 }
 
 const linkStyle = TextStyle(
-  color: mSeller400,
+  color: mSeller900,
   fontWeight: FontWeight.bold,
   decoration: TextDecoration.underline,
   fontFamily: 'Poppin',
@@ -35,8 +31,7 @@ const menuStyle = TextStyle(
 );
 
 const progressIndicator = CircularProgressIndicator(
-  backgroundColor: mSeller400,
-  strokeWidth: 3.0,
+  strokeWidth: 5.0,
 );
 
 toastError(String txt) => Fluttertoast.showToast(

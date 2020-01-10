@@ -48,11 +48,20 @@ final ThemeData mSellerTheme = _buildSellerTheme();
 ThemeData _buildSellerTheme() {
   final ThemeData base = ThemeData.light();
   return base.copyWith(
-    accentColor: color1,
+    accentColor: mVendor,
     primaryColor: mSeller100,
     buttonTheme: base.buttonTheme.copyWith(
-      buttonColor: mSeller100,
+      buttonColor: mVendor,
       textTheme: ButtonTextTheme.normal,
+      padding: EdgeInsets.only(
+          left: 125.0,
+          right: 125.0,
+          top: 12.0,
+          bottom: 12.0
+      ),
+      shape: RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(10.0)
+      )
     ),
     scaffoldBackgroundColor: mSellerBackgroundWhite,
     textSelectionColor: mSeller100,
@@ -73,7 +82,7 @@ TextTheme _buildShrineTextTheme(TextTheme base) {
       fontSize: 25.0
     ),
     title: base.title.copyWith(
-      fontSize: 20.0,
+      fontSize: 18.0,
       fontWeight: FontWeight.bold,
       fontFamily: 'Raleway',
       color: mSellerBackgroundWhite
@@ -86,3 +95,4 @@ TextTheme _buildShrineTextTheme(TextTheme base) {
     ),
   );
 }
+
